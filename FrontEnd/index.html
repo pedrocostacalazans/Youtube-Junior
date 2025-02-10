@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Youtube Jr</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="http://localhost:3003/styles/favicon" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="header">
+        <div class="logo-container">
+            <i class="ri-menu-line"></i>
+            <div class="logo">
+                <div class="logo-img">
+                    <img src="img/yt_ico_144x144.png" alt="Youtube Logo">
+                </div>
+                <h1 id="logo-txt">YouTube</h1>
+            </div>
+        </div>
+        <div class="search-container">
+            <form action="">
+                <input type="text" placeholder="Search">
+            </form>
+            <button class="search"><i class="ri-search-line"></i></button>
+            <button class="mic"><i class="ri-mic-fill"></i></button>
+        </div>
+        <div class="profile-container">
+            <i class="ri-video-add-line"></i>
+            <i class="ri-grid-fill"></i>
+            <i class="ri-notification-4-line"></i>
+            <div class="profile-box">
+                <a href="https://www.youtube.com/@P4Code">
+                    <img src="img/p4.png" alt="" class="">
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="body-container">
+        <div class="sidebar">
+            <div class="sidebar-items">
+                <a href="#" class="sidebar-item"><i class="ri-home-5-line"></i>Home</a>
+                <a href="#" class="sidebar-item"><i class="ri-compass-3-line"></i>Explore</a>
+                <a href="#" class="sidebar-item"><i class="ri-wireless-charging-line"></i>Shorts</a>
+                <a href="#" class="sidebar-item"><i class="ri-rss-line"></i>Subscription</a>
+                <hr>
+                <h4 class="more">Você</h4>
+                <a href="#" class="sidebar-item"><i class="ri-links-line"></i>Library</a>
+                <a href="#" class="sidebar-item"><i class="ri-history-line"></i>History</a>
+                <a href="#" class="sidebar-item"><i class="ri-video-line"></i>Your videos</a>
+                <a href="#" class="sidebar-item"><i class="ri-time-line"></i>Watch later</a>
+                <a href="#" class="sidebar-item"><i class="ri-play-list-2-line"></i>All videos</a>
+                <a href="#" class="sidebar-item"><i class="ri-arrow-down-s-line"></i>Show more</a>
+                <hr>
+                <h4 class="more">Mais do YouTube</h4>
+                <a href="#" class="sidebar-item"><i class="ri-keyboard-box-line"></i>Gaming</a>
+                <a href="#" class="sidebar-item"><i class="ri-live-line"></i>Live</a>
+                <a href="#" class="sidebar-item"><i class="ri-award-line"></i>Sports</a>
+                <hr>
+                <a href="#" class="sidebar-item"><i class="ri-settings-5-line"></i>Settings</a>
+                <a href="#" class="sidebar-item"><i class="ri-flag-line"></i>Report history</a>
+                <a href="#" class="sidebar-item"><i class="ri-question-line"></i>Help</a>
+                <a href="#" class="sidebar-item"><i class="ri-feedback-line"></i>Send feedback</a>
+                <hr>
+                <div class="more">
+                    <h5>Sobre Imprensa</h5>
+                    <h5>Direitos autorais</h5>
+                    <h5>Entre em contato</h5>
+                    <h5>Criadores de conteúdo</h5>
+                    <h5>Publicidade Desenvolvedores</h5>
+                    <br>
+                    <h5>Termos Privacidade</h5>
+                    <h5>Política e segurança</h5>
+                    <h5>Como funciona o YouTube</h5>
+                    <h5>Testar os novos recursos</h5>
+                    <h5>© 2023 P4 Code</h5>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="chips-wrapper">
+                <div class="chip">CR7</div>
+                <div class="chip">Cristiano Ronaldo</div>
+                <div class="chip">Messi</div>
+                <div class="chip">Neymar</div>
+                <div class="chip">Bellingol</div>
+                <div class="chip">É ele</div>
+                <div class="chip">Atletico Mineiro</div>
+                <div class="chip">Real Madrid</div>
+                <div class="chip">All Nassr</div>
+                <div class="chip">Barcelona</div>
+                <div class="chip">Libertadores</div>
+                <div class="chip">Campeonato Brasileiro</div>
+                <div class="chip">La Liga</div>
+                <div class="chip">Sauditão</div>
+                <div class="chip">Copa do Brasil</div>
+                <div class="chip">Copa do Rei</div>
+            </div>
+            <div class="video-container" id="vc1">
+            </div>
+        </div>
+    </div>
+    <script>
+        function loadVideos() {
+            fetch('videosList.json')
+                .then(res => res.json())
+                .then(videos => {
+
+                    const videoContainer = document.querySelector("#vc1");
+
+                    videos.map(v => {
+
+                        const video_content_cover = document.createElement("div");
+                        video_content_cover.classList.add("video-content-cover");
+
+                        const video_content = document.createElement("div")
+                        video_content.classList.add("video-content")
+
+                        const video_box = document.createElement("a");
+                        video_box.classList.add("video-box");
+                        video_box.href = v.video_route
+
+                        const thumb = document.createElement("img")
+                        thumb.classList.add("thumb")
+                        thumb.src = v.thumb
+
+                        const video_details = document.createElement("div")
+                        video_details.classList.add("video-details")
+
+                        const channel_logo = document.createElement("div")
+                        channel_logo.classList.add("channel-logo")
+
+                        const channel_img = document.createElement("img")
+                        channel_img.src = v.channel_img
+
+                        const detail = document.createElement("div")
+                        detail.classList.add("detail")
+
+                        const title = document.createElement("h3")
+                        title.classList.add("title")
+                        title.textContent = v.title
+
+                        const channel_name = document.createElement("div")
+                        channel_name.classList.add("channel-name")
+                        channel_name.textContent = v.channel_name
+
+                        const views_upload = document.createElement("div")
+                        views_upload.classList.add("views-upload")
+
+                        const views = document.createElement("div")
+                        views.classList.add("views")
+                        views.textContent = v.views
+
+                        const upload = document.createElement("div")
+                        upload.classList.add("upload")
+                        upload.textContent = v.upload
+
+                        const hidden_content = document.createElement("div")
+                        hidden_content.classList.add("hidden-content")
+
+                        const btnViewMore = document.createElement("div")
+                        btnViewMore.classList.add("btn")
+                        //btnViewMore.textContent = "Ver mais tarde"
+
+                        const icWatcher = document.createElement("i")
+                        icWatcher.classList.add("ri-time-line")
+
+                        const btnAddToQueue = document.createElement("div")
+                        btnAddToQueue.classList.add("btn")
+                        //btnAddToQueue.textContent = "Add to queue"
+
+                        const icAdd = document.createElement("i")
+                        icAdd.classList.add("ri-play-list-2-line")
+
+
+                        // videoContainer-cover childs
+                        videoContainer.appendChild(video_content_cover)
+
+                        // video-content-cover childs
+                        video_content_cover.appendChild(video_content)
+
+                        //video-content childs
+                        video_content.appendChild(video_box)
+                        video_content.appendChild(video_details)
+                        video_content.appendChild(hidden_content)
+
+                        //video-box childs
+                        video_box.appendChild(thumb);
+
+                        //video-details childs
+                        video_details.appendChild(channel_logo);
+                        video_details.appendChild(detail)
+
+                        // channel-logo childs
+                        channel_logo.appendChild(channel_img)
+
+                        // detail childs
+                        detail.appendChild(title)
+                        detail.appendChild(channel_name)
+                        detail.appendChild(views_upload)
+
+                        // views_upload childs
+                        views_upload.appendChild(views)
+                        views_upload.appendChild(upload)
+
+                        //hidden_content childs
+                        hidden_content.appendChild(btnViewMore)
+                        hidden_content.appendChild(btnAddToQueue)
+
+                        //btns childs
+                        btnViewMore.appendChild(icWatcher)
+                        icWatcher.insertAdjacentText("afterend", "Ver mais tarde") //Coloca o texto depois do 'fim' (afterend) do icone
+
+                        btnAddToQueue.appendChild(icAdd)
+                        icAdd.insertAdjacentText("afterend", "Add to queue")
+                    })
+                })
+        }
+        loadVideos()
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,24 @@
+<div class="video-content-cover">
+                    <div class="video-content">
+                        <a href="#" class="video-box">
+                            <img src="img/thumb1.png" alt="" class="thumb">
+                        </a>
+                        <div class="video-details">
+                            <div class="channel-logo">
+                                <img src="img/p4.png" alt="" class="">
+                            </div>
+                            <div class="detail">
+                                <h3 class="title">RECRIEI o App que SUBSTITUI o SoundPad e o VoiceMod!</h3>
+                                <div class="channel-name">P4 Code</div>
+                                <div class="views-upload">
+                                    <div class="views">28 mi views</div>
+                                    <div class="upload">1 dia atrás</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hidden-content">
+                            <div class="btn"><i class="ri-time-line"></i>Ver mais tarde</div>
+                            <div class="btn"><i class="ri-play-list-2-line"></i>Add to queue</div>
+                        </div>
+                    </div>
+                </div>

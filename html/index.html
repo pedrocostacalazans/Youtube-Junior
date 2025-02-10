@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reprodutor de Vídeo HLS</title>
+    <link rel="stylesheet" href="http://localhost:3003/styles/mediaPlayerStyle">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dplayer@1.26.0/dist/DPlayer.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="shortcut icon" href="http://localhost:3003/styles/favicon" type="image/x-icon">
+</head>
+
+<body>
+
+    <div class="header">
+        <div class="logo-container">
+            <i class="ri-menu-line"></i>
+            <a href="http://localhost:3003/home" style="text-decoration: none;">
+                <div class="logo">
+                    <div class="logo-img">
+                        <img src="http://localhost:3003/img/yt_ico_144x144.png" alt="Youtube Logo">
+                    </div>
+                    <h1 id="logo-txt">YouTube</h1>
+                </div>
+            </a>
+        </div>
+        <div class="search-container">
+            <form action="">
+                <input type="text" placeholder="Search">
+            </form>
+            <button class="search"><i class="ri-search-line"></i></button>
+            <button class="mic"><i class="ri-mic-fill"></i></button>
+        </div>
+        <div class="profile-container">
+            <i class="ri-video-add-line"></i>
+            <i class="ri-grid-fill"></i>
+            <i class="ri-notification-4-line"></i>
+            <div class="profile-box">
+                <a href="https://www.youtube.com/@P4Code">
+                    <img src="http://localhost:3003/img/p4.png" alt="" class="">
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="main-video">
+            <div class="dplayer" id="dplayer">
+                <script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
+                <video id="mediaPlayer" controls></video>
+                <div class="profile-box">
+                    <a href="https://www.youtube.com/@P4Code">
+                        <img src="http://localhost:3003/img/p4.png" alt="" class="">
+                    </a>
+                    <h3 class="title"></h3>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- <div class="video-list">
+            <div class="vid active">
+                <video src="http://localhost:8080?video=O_sonho_do_hexa.m3u8" controls></video>
+                <h3 class=" title">1 O SONHO DO HEXA ESTÁ ACABADO</h3>
+            </div>
+            <div class="vid">
+                <video src="http://localhost:8080?video=O_sonho_do_hexa.m3u8" controls></video>
+                <h3 class=" title">2 O SONHO DO HEXA ESTÁ ACABADO</h3>
+            </div>
+            <div class="vid">
+                <video src="http://localhost:8080?video=O_sonho_do_hexa.m3u8" controls></video>
+                <h3 class=" title">3 O SONHO DO HEXA ESTÁ ACABADO</h3>
+            </div>
+        </div> -->
+
+    </div>
+
+    <script>
+
+        function getParametersUrl(parameter) {
+            const queryString = window.location.search; // obtém a string de consulta da URL
+            const urlParams = new URLSearchParams(queryString); // Cria um objeto a partir da string de consulta
+            const param = urlParams.get(parameter) //Obtem o valor do nosso parametro 
+
+            return param
+        }
+
+        function loadVideoGalery(videoParam) {
+            fetch('http://localhost:3003/videos')
+                .then(res => res.json())  // Adicione o "return" aqui
+                .then(videoList => {
+                    const container = document.querySelector('.container')
+                    const video_list = document.createElement('div')
+                    video_list.classList.add('video-list')
+                    let mainTitle = document.querySelector('.main-video .title');
+
+                    videoList.map(v => {
+                        const vid = document.createElement('div')
+                        vid.classList.add('vid')
+
+                        const thumb = document.createElement("img")
+                        thumb.classList.add("thumb")
+                        thumb.src = `http://localhost:3003/${v.thumb}`
+
+                        console.log(v.thumb)
+
+                        const title = document.createElement("h3")
+                        title.classList.add("title")
+                        title.textContent = v.title
+
+
+                        if (v.video_route == `http://localhost:8080?video=${videoParam}`) {
+                            vid.classList.add('active')
+                            mainTitle.innerHTML = v.title
+                        }
+
+                        container.appendChild(video_list)
+                        video_list.appendChild(vid)
+                        vid.appendChild(thumb)
+                        vid.appendChild(title)
+                    })
+
+                    loadVideoList()
+
+                })
+                .catch(error => {
+                    console.error('Erro ao obter dados:', error);
+                });
+        }
+
+        function loadMediaPlayer(route) {
+
+            videoParam = getParametersUrl('video')
+
+            var video = document.getElementById('mediaPlayer');
+            var videoSrc = route != null ? route : `http://localhost:8080/streams/${videoParam}`;
+
+            if (Hls.isSupported()) {
+                var hls = new Hls();
+                hls.loadSource(videoSrc);
+                hls.attachMedia(video);
+            }
+        }
+
+        function loadVideoList() {
+            let listVideo = document.querySelectorAll('.video-list .vid');
+            let mainVideo = document.querySelector('.main-video video');
+            let mainTitle = document.querySelector('.main-video .title');
+
+            listVideo.forEach(video => {
+
+                video.onclick = () => {
+                    listVideo.forEach(vid => vid.classList.remove('active'));
+                    video.classList.add('active');
+
+                    if (video.classList.contains('active')) {
+                        let src = video.children[0].getAttribute('src')
+
+
+                        let text = video.children[1].innerHTML
+                        mainTitle.innerHTML = text
+
+                        fetch('http://localhost:3003/videos')
+                            .then(res => res.json())  // Adicione o "return" aqui
+                            .then(videoList => {
+                                videoList.map(v => {
+                                    if (v.title == text) {
+                                        console.log(v.video_route.split('=')[1])
+                                        loadMediaPlayer(`/streams/${v.video_route.split('=')[1]}`)
+                                    }
+                                })
+                            })
+                            .catch(error => {
+                                console.error('Erro ao obter dados:', error);
+                            });
+
+                    }
+                }
+            });
+        }
+
+
+
+        loadMediaPlayer()
+        loadVideoGalery(videoParam)
+
+    </script>
+</body>
+
+</html>

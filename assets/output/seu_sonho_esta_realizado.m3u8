@@ -1,0 +1,17 @@
+#EXTM3U
+#EXT-X-VERSION:3
+#EXT-X-TARGETDURATION:16
+#EXT-X-MEDIA-SEQUENCE:0
+#EXTINF:16.433333,
+seu_sonho_esta_realizado0.ts
+#EXTINF:8.333333,
+seu_sonho_esta_realizado1.ts
+#EXTINF:10.100000,
+seu_sonho_esta_realizado2.ts
+#EXTINF:5.333333,
+seu_sonho_esta_realizado3.ts
+#EXTINF:11.500000,
+seu_sonho_esta_realizado4.ts
+#EXTINF:5.600000,
+seu_sonho_esta_realizado5.ts
+#EXT-X-ENDLIST
