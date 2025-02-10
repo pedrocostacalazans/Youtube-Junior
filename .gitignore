@@ -1,0 +1,5 @@
+# Ignorar arquivos de vídeo MP4
+*.mp4
+
+# Ignorar arquivos de configuração do macOS Finder
+.DS_Store
